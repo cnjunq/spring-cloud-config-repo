@@ -1,5 +1,5 @@
 server:
-  port: 9905
+  port: 80
   tomcat:
     accesslog:
       enabled: true
@@ -14,14 +14,13 @@ logging:
     org.springframework.security: DEBUG
 
 management:
-  port: 9904
+  port: 81
   context-path: /manage
   security:
     enabled: false
 
 spring:
   application:
-    name: cart-service
     instance_id: 001
   cloud:
     inetutils:

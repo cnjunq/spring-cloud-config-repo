@@ -21,7 +21,6 @@ management:
 
 spring:
   application:
-    name: cart-service
     instance_id: 001
   cloud:
     inetutils:

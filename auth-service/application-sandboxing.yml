@@ -1,0 +1,54 @@
+server:
+  port: 9020
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: logs
+      pattern: '%h %l %u %t "%r" %s %b %Dms'
+      buffered: false
+
+logging:
+  level:
+    root: INFO
+    io.junq: DEBUG
+    org.springframework.security: INFO
+
+management:
+  port: 9019
+  context-path: /manage
+  security:
+    enabled: false
+
+spring:
+  application:
+    name: auth-service
+    instance_id: 001
+  cloud:
+    inetutils:
+      preferred-networks:
+        - 192.168
+        - 10.0
+    consul:
+      host: ${CONSUL_HOST}
+      port: ${CONSUL_PORT}
+      discovery:
+        enable: true
+        instanceId: ${spring.application.name}:${spring.application.instance_id}:${random.value} # 实例ID
+        healthCheckPath: ${management.context-path}/health # 健康检测路径
+        healthCheckInterval: 15s # 健康检测时间间隔
+        tags: emall # 服务的标签
+  datasource:
+    url: '{cipher}{key:emall-config-server-key}AgAnh0G/9v3VLOGAvlSMBUV2m9XrPfPDD/8/fLQbLDyDr3OAkyzbK2Q9g4v1L/HtkrPH9kJQKIyX1q7Xjq9LPjrK5FJl23ZOaeKSua50PrclqEqbIm4Tix+5rv+ZIgvLSdfwLcSEG5JUtmtyLut+xdm0sYfYztqJI2+2Ebel3lQsHwQr7kr3aJEQ2FUkovXD7bMaWScv46tkd40xeEYcIVVIraAkcADuFAL3za3KdDH8sXYAbFF8ew9ceZHOWZWzeGOD3qzzSoDpSYsdcH69p58oL5EsdlbHm343gI33dx+cwN1lyCMWKrLcc4G+qCAv7PikuJa0IszeB+w7c0hXNGqUPwpQJXXc/Zw5Uei7hrpEt72lLeI8iT51x2MSE12kns5b8fUC39caf5LkrPMml0GaBcmmTqHR7boeng/I+At4gn0dXpX73mFWcmZctnK7jmRyiTAxq+1GiW1ko6jyXi4/tiktu6CFYpAtkxJw4gIjrTnea8ECejRsPQXEbqjcb4s6H5GiljHXRoBlz8/GpvnrW9BJOyHfs+Q1cQ0OEMWnM6YjcQtsDYJvcdUyp6xcq5yE1B0HKwpJvOfBXziI+VQN1/CV6Va8LpLwN3bzVI6wF8u8HrASGQZHSkBe4puoqbvhlOIokoBcN+HyNfJ0oVjJuLhs5FzSkqxdkwrf38ySCRn5EU8uDJQntye6kefpz5PrcvHBye5XO7PokSObwT7cqdWmKRIv2qMcIFDdspdmn3gi1bzMgBMFVgiQmBChhFo='
+    username: '{cipher}{key:emall-config-server-key}AgAUzPQxS3ss6PhN7tgrgrpb/MPXFjSjLsjKLr3Hivs6UtmIZ8Z3FWFWRtBwy4desma6Ku4Rdi6beT8Jz3Z//mO8Jj0Rufy+jmemXL8D2zTqxXEtJUpI66IyKYvQ7R4i/rglvZhr+f1HPvCjhBby9yM97kKgAvd1rGA4s81xE9t0OyIehFOerMDuiTCE/TKr8xRvpJu37CoeEvePOsrrcs60XRBlsL4hiERzQGtX14XXwpJzLprgGMmLFwUvfwzgLoBxztdBVnDCMUVBhF44d7VMA1j8iko8Hs9VNFNVl3pQZylaXIjHKu0sg/MBY0gpXMWp2UBsr1AYbYvCam/h2UypQ6io8Yli3zvpIINtt9xEG7L8rz8BIPFbUMTkyzvYtNL1X9tcXffE8O4dZ1Apb15xFhXcYYGTBv65i1Zo14L3GF/7FDPPCOkz2LYGFg1jSV2fR6jOXk2eP9xgNk5O5hh5vHoig8N/t+Qh4EKkqgx4iclPv3B4pJ4dD/rtQ0K5MJKxoPjt/CdeskX+mMIiNDgw9JxI/2TzjdBfmFshoUwMQMx9GBwvGXQJSgTxUKdp6/KIaQtUxzJ0ykgh1h0H0Suc3Y+EIxSWm166d72bLFOx85GKlrN3MH7AuP2gl+zXiMSLGyAZoXsO86veOBbgUXQOib3EEQ7ybU8O3iK73SGKz5tlQOYOSfbDSY00bKR5alvKY/Fr6m/AH34yhUcONoEF'
+    password: '{cipher}{key:emall-config-server-key}AgBDgeJkiZReCfo5YHDCTxBx30i/anugER1j9ma8tdirw7eKLiRVMJqFhrd00hQaQvshPJ7Z0LuXzTYKhJaXumJnzFR7eVpW0BVXGwaDy3pRS/Dtsmi62rUWKRQjQC6hWGHD/rbXgvNnK0ncjzAk9n6hme9O8iidWCjPwSN4U7reDdCGEhVDS+UjDaYlaAFdhAypzcsK0FmF70ryQ02fTNJcPlR/WDYY/4BMfC6S0I9aJFdUjTDxVZ6eUBpVdACNIW+pvISAKdsmNWe7fZLG7mTPiMYQ4FTlnT7rQeGNNIZ1e/fpR132zpZp8xazLRn4v7Qr+itnYP8qlLw43fWMKKcmzA44BeabR9SAK3FAYjNcclNp86vOxfnXH0fXhFzOzNx39e+Az/8DpOP+nEctZJ4Ghi7G0bLO3ItIicre9RKEt7sgFfbIFOsZdXYVfUL2pKxAL1rq9B5WpH1wDrrdL9RTZtEC2+R4BHNdpRQgc04SDcQ7JEeSE4CDDR1xzMh669W1EBWaD6fseh/HSGedtkrGfRRzcpJnB/QHCSWqVLlPxC/s2mhH2POiUmoBgkelYeHfMY36oW7TO9aMA5yMoX6Rl6aCTGhzYKr+bLEtGQTX5x6w+WNGKh+pUhCNsty2iG1yBwoeVPJEZ9m8OUEDwSUNU+YNSy/BJnbnTR9exZW2KVtxIXrnCiU7F+hONtrd/lGqc/3GLjyYrYfgccrOxYfC'
+    driver-class-name: com.mysql.jdbc.Driver
+    schema: file:/emall/data/schema-mysql.sql
+    data:
+      - file:/emall/data/data-mysql.sql
+    initialize: true
+    continue-on-error: false
+
+security:
+  oauth2:
+    resource:
+      filter-order: 3

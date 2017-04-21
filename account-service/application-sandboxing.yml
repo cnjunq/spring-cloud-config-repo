@@ -1,0 +1,47 @@
+server:
+  port: 9999
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: logs
+      pattern: '%h %l %u %t "%r" %s %b %Dms'
+      buffered: false
+
+logging:
+  level:
+    root: INFO
+    io.junq: DEBUG
+
+
+management:
+  port: 9998
+  context-path: /manage
+  security:
+    enabled: false
+
+spring:
+  application:
+    name: account-service
+    instance_id: 001
+  cloud:
+    inetutils:
+      preferred-networks:
+        - 192.168
+        - 10.0
+    consul:
+      host: ${CONSUL_HOST}
+      port: ${CONSUL_PORT}
+      discovery:
+        enable: true
+        instanceId: ${spring.application.name}:${spring.application.instance_id}:${random.value} # 实例ID
+        healthCheckPath: ${management.context-path}/health # 健康检测路径
+        healthCheckInterval: 15s # 健康检测时间间隔
+        tags: emall # 服务的标签
+  datasource:
+    url: '{cipher}{key:emall-config-server-key}AgA30RYNu/4y6vsad9GdNp/rTbuHeELm9uYZyyWzw+u9gxqG6L84tm/pj/iWTiu5PdhJ6okKdg7Dx9wo4SPB5ttna/AvXYFr3lyJELeQ/nPQqQm4VgkF463S895f3YJSG6k58jWfBWww//7XKUMabIepB3TV+CK06Z25Kjilw+ChqyJ5ctT9PeeSbCaDckbx1r0FvK55Ocvb/265hAo8YM6PKIlFMauC2ooEOymG8paSI8ijxEJREYJuHnEupFQKNiGcJbxwwuRX5/26QOJ5zFxNCPZcmA9ybiQjuiy2MASx9Mrfknbk7FG0XVepTjx45OPGPhMxhuEKhuK9CKbG1QfIxA49nvuz8r63mtsMvOZ2q+z/bZUQ/8lUoWUydWrGPHVUg3R4wpQNUqavMM8AndiDMGP2DB15cgVNygoTpTAJ8DOmuFJvVquqxzGcjTNQwvkCVmN/b3M6RXDWwcO/hLI2J5cvLp0GRq4YjBNcNs9Ik1sNlxWdQrjHoS1e6hbxMFOxfdzQ3DcAoC29EZ9Q08AG9tSj/QbLvNxRILmfsLcIXhnvYHdPBV6ZK5Dt2MYJLb5cpnAz5EwwX01gWF7H/ntUlOTkpEsMn80EnY/d/Ax7jXKYp7CyHo5f1nz6439QnT1X97FQFTsoVPwycEezwHzLIRZQynYZkBrQELbPqg6e/pbkpc4M1r2erCtbZLFPWQ5Q8R+9XTN+fR8mKUfLVnuVio6XzP+3GuUV6UTHx756vE0D4dTfLqgPfWnOhNCu5fU='
+    username: '{cipher}{key:emall-config-server-key}AgBb8FYZhUO/7Hvdih3V+D+dN2TwpOzNe3ht73ubABiYoa7ZcjduCMtC61LY2LMJrxg5Hq5aytAgHuRN+SiV6lV+cdK/gU+YyteSoubBs3PqSttONV/7rM2Il+zd9COei6VKVfTneMpGYULioqAvCkdJ77Vec+9/Q8U44uq+Ka+1OwGFFH0hsOqBHWY/fW6GTdbC0P21J8X3+S3ONF6OE48UEdkM3rcwdYfsnB1ZaVvyHmSxzqdXurkx4CXjT4jNLODzPfqFPmd42b4UIGYIRY1xaLaRcqYr+jajS36ZIpPiIJb+O7G3f2uKHHwt4uXqJ6X6diZ62haJzQTbTVVv9Nm69UxPuOpBtQE2FTLeBo+6mlI183OJLf6lQNoq958NvVeXHXk+wNKWuUg9rWmJqALxt5M9sFAAWF8h71Ei78jVBesgUYDh5ocs94mUnBaHU8Yv/qtw0kdVr3Rwy9QM2xyNPPIXTyI7pPmaitd+4lBzMjQXx7DRrf2iT2iA67Lb959GcBAXqnrf9eROIwaNeSWJoakuvvX3pqDajOb2fOfHAjyFujiu6/umTi3/sBiVWJYLowOKa9V00POzqAiwN85PmbPdptAF0rwrcQ4xbu7a5M75RfcePv58X9PTP7eQy11zW86ZCHzo/5GunXCdadoITkm+0thnWdvaxyC+e3u1u442Amo7ZxtK2AjuBFJgOxUNQmhpa5FgEzxofLXl5Kzf'
+    password: '{cipher}{key:emall-config-server-key}AgAbuwUT5fHrDc5L9m1QKgaOyljXTvkfOeLIearLsvTgons6oVJqDcI2Qi7XGTpWP+HAQnZeZzVT6dqCopcTMAPFbuvFM0A8nnuo1yJPiK26EItNXqS5meQpLVhVQfiDczA72VEdHU3VHpXIgmCukDPy1/VWtwDYj4WLKReWllDaEjzYx8AyFeaRPcpqnkIqGVdCKTvN+a6sto+LYwBbGUEoyYSyCvZqEOuqsLo4zOX8U3rP94aq3QMADGIGBS7Zf8ZD88FtbTzbq8NDhihCOUXVusTellfIBm4UeEqrP5lMfupA8KQQ5zfJ3dYD1LjdarF3F43CgqUxJHFSIY6mnxghnQpth+VdYywd4zolCKgfupj4RY658Qal6G8uQObXYH0AE+ChclJ7Suuz1WJ3AWx3b8Ns6tFTRw8byh4rXdUPxyUdVlV6yaE69Y3Yn5d/VcC3AVK2xWbOsJrqCI6HLut/YRyScTbewia4If/olxVNPHorfxdGys4c6+UrjtSCT0AxStrDA6w1zV6hnrDe5GsvPBQ54kIwdX08qeUYIIuGMhU6pklEWtW2xUVKP8UcSq+u5HmMHS+4CRve0TVtDyEOtTlfaXbGBqE+BwoxXB/H/hN03fqhkRP5afC0GDYqWkV8UFspi83DArbPYetap1Q53IocYdh8oTPJBBOZiX3DHMw1cNL1stFySsmoUdG1UoVtGVUIrkjOLdDb/juMxvfm'
+    driver-class-name: com.mysql.jdbc.Driver
+    schema: file:/emall/data/schema-mysql.sql
+    initialize: true
+    continue-on-error: false
